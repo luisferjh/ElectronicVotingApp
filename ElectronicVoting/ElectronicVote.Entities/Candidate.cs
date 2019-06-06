@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ElectronicVote.Entities
 {
@@ -6,9 +8,11 @@ namespace ElectronicVote.Entities
     {
         public int IdCandidate { get; set; }
         public string FullName { get; set; }
-        public Byte Picture { get; set; }
+        //public Byte Picture { get; set; }
+        public string Picture { get; set; }
         public Boolean State { get; set; }
+
         //Navigation Properties
-        public Vote Vote { get; set; }
+        public ICollection<Vote> Votes { get; set; }
     }
 }

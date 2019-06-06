@@ -27,10 +27,6 @@ namespace ElectronicVote.Data.Mapping
             builder.HasOne(x => x.Role)
               .WithMany(x => x.Users)
               .OnDelete(DeleteBehavior.Restrict);
-            
-            builder.HasOne(x => x.Vote)
-                .WithMany(x => x.Users)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
