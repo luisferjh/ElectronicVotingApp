@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ElectronicVote.Entities
 {
+    [Auditable]
     public class Vote
     {       
         public int IdUser { get; set; }
