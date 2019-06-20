@@ -20,14 +20,14 @@ namespace ElectronicVote.Web.Repository.Candidates
         public async Task<IEnumerable<CandidateViewModel>> List()
         {
             var candidates = await _context.Candidates
-                .Include(c => c.IdCandidate)
+                .Include(c => c.ImageCandidate)
                 .ToListAsync();
 
             return candidates.Select(c => new CandidateViewModel
             {
                 IdCandidate = c.IdCandidate,
                 FullName = c.FullName,
-                Picture = c.ImageCandidate.ImagePath,
+                Picture = $"https://localhost:44397/api/ImageCandidate/get/{c.ImageCandidate.IdCandidate}.png",
                 State = c.State
             });
 

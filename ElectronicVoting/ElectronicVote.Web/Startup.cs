@@ -1,5 +1,6 @@
 using ElectronicVote.Data;
 using ElectronicVote.Web.Repository.Candidates;
+using ElectronicVote.Web.Repository.Roles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,7 @@ namespace ElectronicVote.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<ICandidateRepository, CandidateRepository>();
             services.AddTransient<IImgCandidateRepository, ImgCandidateRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
 
             // In production, the React files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
