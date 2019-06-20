@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElectronicVote.Data.Migrations
 {
-    public partial class database : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,6 @@ namespace ElectronicVote.Data.Migrations
                     IdCandidate = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FullName = table.Column<string>(maxLength: 100, nullable: false),
-                    Picture = table.Column<string>(nullable: true),
                     State = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -38,6 +37,24 @@ namespace ElectronicVote.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ImageCandidate",
+                columns: table => new
+                {
+                    IdCandidate = table.Column<int>(nullable: false),
+                    ImagePath = table.Column<string>(maxLength: 150, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageCandidate", x => x.IdCandidate);
+                    table.ForeignKey(
+                        name: "FK_ImageCandidate_Candidate_IdCandidate",
+                        column: x => x.IdCandidate,
+                        principalTable: "Candidate",
+                        principalColumn: "IdCandidate",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -46,7 +63,7 @@ namespace ElectronicVote.Data.Migrations
                     IdRole = table.Column<int>(nullable: false),
                     FullName = table.Column<string>(maxLength: 100, nullable: false),
                     Age = table.Column<int>(nullable: false),
-                    Record = table.Column<string>(maxLength: 20, nullable: false),
+                    Record = table.Column<bool>(maxLength: 20, nullable: false),
                     PasswordHash = table.Column<string>(maxLength: 64, nullable: false),
                     PasswordSalt = table.Column<string>(maxLength: 64, nullable: false),
                     Voted = table.Column<bool>(nullable: false)
@@ -100,6 +117,9 @@ namespace ElectronicVote.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ImageCandidate");
+
             migrationBuilder.DropTable(
                 name: "Vote");
 

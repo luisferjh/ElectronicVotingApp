@@ -10,7 +10,7 @@ namespace ElectronicVote.Entities
         public int IdRole { get; set; }       
         public string FullName { get; set; }
         public int Age { get; set; }
-        public string Record { get; set; }
+        public Boolean Record { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public Boolean Voted { get; set; }

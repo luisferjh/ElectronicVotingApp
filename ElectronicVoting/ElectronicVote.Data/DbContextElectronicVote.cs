@@ -14,6 +14,7 @@ namespace ElectronicVote.Data
         public DbSet<VoterUser> VoterUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<ImageCandidate> ImageCandidates { get; set; }
 
         public DbContextElectronicVote(DbContextOptions<DbContextElectronicVote> options)
              : base(options)
@@ -34,6 +35,7 @@ namespace ElectronicVote.Data
             modelBuilder.ApplyConfiguration(new VoterUserMap());
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new VoteMap());
+            modelBuilder.ApplyConfiguration(new ImageCandidateMap());
         }
 
         public override int SaveChanges()

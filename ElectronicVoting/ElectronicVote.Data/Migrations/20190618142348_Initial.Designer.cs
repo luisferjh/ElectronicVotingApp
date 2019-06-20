@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicVote.Data.Migrations
 {
     [DbContext(typeof(DbContextElectronicVote))]
-    [Migration("20190607211255_database")]
-    partial class database
+    [Migration("20190618142348_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,13 +31,24 @@ namespace ElectronicVote.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("Picture");
-
                     b.Property<bool>("State");
 
                     b.HasKey("IdCandidate");
 
                     b.ToTable("Candidate");
+                });
+
+            modelBuilder.Entity("ElectronicVote.Entities.ImageCandidate", b =>
+                {
+                    b.Property<int>("IdCandidate");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.HasKey("IdCandidate");
+
+                    b.ToTable("ImageCandidate");
                 });
 
             modelBuilder.Entity("ElectronicVote.Entities.Role", b =>
@@ -94,8 +105,7 @@ namespace ElectronicVote.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(64);
 
-                    b.Property<string>("Record")
-                        .IsRequired()
+                    b.Property<bool>("Record")
                         .HasMaxLength(20);
 
                     b.Property<bool>("Voted");
@@ -105,6 +115,14 @@ namespace ElectronicVote.Data.Migrations
                     b.HasIndex("IdRole");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("ElectronicVote.Entities.ImageCandidate", b =>
+                {
+                    b.HasOne("ElectronicVote.Entities.Candidate", "Candidate")
+                        .WithOne("ImageCandidate")
+                        .HasForeignKey("ElectronicVote.Entities.ImageCandidate", "IdCandidate")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ElectronicVote.Entities.Vote", b =>
