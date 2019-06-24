@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicVote.Data.Migrations
 {
     [DbContext(typeof(DbContextElectronicVote))]
-    [Migration("20190618142348_Initial")]
-    partial class Initial
+    [Migration("20190623135722_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,17 +91,21 @@ namespace ElectronicVote.Data.Migrations
 
                     b.Property<int>("Age");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(70);
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<int>("IdRole");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(64);
 
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
                         .HasMaxLength(64);
 

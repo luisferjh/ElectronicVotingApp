@@ -14,7 +14,6 @@ namespace ElectronicVote.Data.Mapping
             builder.ToTable("Vote")
               .HasKey(p => p.IdUser);
 
-
             //builder.ToTable("Vote")              
             //   .HasKey(p => new { p.IdUser, p.IdCandidate });
 

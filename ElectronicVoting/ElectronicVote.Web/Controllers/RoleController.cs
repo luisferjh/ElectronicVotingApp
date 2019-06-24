@@ -57,13 +57,13 @@ namespace ElectronicVote.Web.Controllers
             {
                 await _roleRepository.AddRole(model);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
 
             return Ok();
@@ -87,20 +87,20 @@ namespace ElectronicVote.Web.Controllers
             {
                 await _roleRepository.UpdateRole(model);
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
                 if (!(await _roleRepository.RoleExists(model.IdRole)))
                 {
-                    return NotFound();
+                    return NotFound(ex);
                 }
-            }
-            catch (DbUpdateException)
+            } 
+            catch (DbUpdateException ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
 
             return Ok(model);

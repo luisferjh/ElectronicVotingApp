@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElectronicVote.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,8 +64,9 @@ namespace ElectronicVote.Data.Migrations
                     FullName = table.Column<string>(maxLength: 100, nullable: false),
                     Age = table.Column<int>(nullable: false),
                     Record = table.Column<bool>(maxLength: 20, nullable: false),
-                    PasswordHash = table.Column<string>(maxLength: 64, nullable: false),
-                    PasswordSalt = table.Column<string>(maxLength: 64, nullable: false),
+                    Email = table.Column<string>(maxLength: 70, nullable: false),
+                    PasswordHash = table.Column<byte[]>(maxLength: 64, nullable: false),
+                    PasswordSalt = table.Column<byte[]>(maxLength: 64, nullable: false),
                     Voted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

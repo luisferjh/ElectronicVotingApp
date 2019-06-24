@@ -21,15 +21,15 @@ namespace ElectronicVote.Web.Controllers
             _candidateRepository = candidateRepository;
         }
 
-        // GET: api/Candidate
+        // GET: api/Candidate/List
         [HttpGet("[action]")]
-        public async Task<IEnumerable> Listar()
+        public async Task<IEnumerable> List()
         {
             var Candidates = await _candidateRepository.List();
             return Candidates;
         }
 
-        // GET: api/Candidate/5
+        // GET: api/Candidate/Get/5
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
@@ -56,13 +56,13 @@ namespace ElectronicVote.Web.Controllers
             {
                 await _candidateRepository.AddCandidate(candidate);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
 
             return Ok(candidate);
@@ -86,16 +86,16 @@ namespace ElectronicVote.Web.Controllers
             {
                 await _candidateRepository.UpdateCandidate(model);
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
                 if (!(await _candidateRepository.CandidateExists(model.IdCandidate)))
                 {
-                    return NotFound();
+                    return NotFound(ex);
                 }
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
             return Ok();
         }
