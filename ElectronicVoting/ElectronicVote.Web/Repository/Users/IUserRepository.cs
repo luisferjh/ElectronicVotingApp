@@ -12,11 +12,12 @@ namespace ElectronicVote.Web.Repository.Users
         Task<IEnumerable<UserViewModel>> List();
         Task<UserViewModel> GetUser(int id);
         Task AddUser(CreateViewModel model);
-        Task Login(LoginViewModel model);
+        Task<UserLoginViewModel> Login(LoginViewModel model);
         Task UpdateUser(UpdateViewModel model);
         Task DeleteUser(VoterUser PUser);
         void CreatePassword(string password, out byte[] passwordHash, out byte[] passwordSalt);
         bool CheckPassword(string password, byte[] passwordHashStored, byte[] passwordSaltStored);
+        string GenerateToken(UserLoginViewModel user);
         Task<bool> UserExists(int id);
         Task<VoterUser> SearchUserById(int id);
     }

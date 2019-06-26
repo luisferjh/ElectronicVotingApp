@@ -65,13 +65,7 @@ namespace ElectronicVote.Web.Controllers
             }
 
             return Ok();
-        }
-
-        // POST: api/User/Login
-        [HttpPost("[action]")]
-        public void Login([FromBody] LoginViewModel model)
-        {
-        }
+        }        
 
         // PUT: api/User/5
         [HttpPut("{id}")]

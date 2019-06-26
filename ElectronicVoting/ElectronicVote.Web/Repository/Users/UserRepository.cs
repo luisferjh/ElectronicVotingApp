@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +10,20 @@ using ElectronicVote.Data;
 using ElectronicVote.Entities;
 using ElectronicVote.Web.Models.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ElectronicVote.Web.Repository.Users
 {
     public class UserRepository : IUserRepository
     {
         private readonly DbContextElectronicVote _context;
-        public UserRepository(DbContextElectronicVote context)
+        private readonly IConfiguration _config;
+
+        public UserRepository(DbContextElectronicVote context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         public async Task<IEnumerable<UserViewModel>> List()
@@ -39,7 +46,9 @@ namespace ElectronicVote.Web.Repository.Users
 
         public async Task<UserViewModel> GetUser(int id)
         {
-            var user = await _context.VoterUsers.FindAsync(id);
+            var user = await _context.VoterUsers
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.IdUser == id);
 
             if (user == null)
             {
@@ -50,6 +59,7 @@ namespace ElectronicVote.Web.Repository.Users
             {
                 IdUser = user.IdUser,
                 IdRole = user.IdRole,
+                Role = user.Role.RoleName,
                 FullName = user.FullName,
                 Email = user.Email,
                 Age = user.Age,
@@ -79,19 +89,50 @@ namespace ElectronicVote.Web.Repository.Users
             await _context.SaveChangesAsync();
         }
 
-        public Task Login(LoginViewModel model)
+        public async Task<UserLoginViewModel> Login(LoginViewModel model)
         {
-            throw new NotImplementedException();
+            var user = await _context.VoterUsers
+                .Include(u=> u.Role)
+                .FirstOrDefaultAsync(u => u.Email == model.Email);
+
+            return new UserLoginViewModel
+            {
+                IdUser = user.IdUser,
+                IdRole = user.IdRole,
+                Role = user.Role.RoleName,
+                FullName = user.FullName,
+                Age = user.Age,
+                Record = user.Record,
+                Email = user.Email,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt,
+                Voted = user.Voted
+            };
         }
 
-        public Task UpdateUser(UpdateViewModel model)
+        public string GenerateToken(UserLoginViewModel user)
         {
-            throw new NotImplementedException();
-        }
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        public Task DeleteUser(VoterUser PUser)
-        {
-            throw new NotImplementedException();
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.IdUser.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("IdVoterUser", user.IdUser.ToString()),
+                new Claim("Role", user.Role),
+                new Claim("Name", user.FullName)
+            };
+
+            var token = new JwtSecurityToken(
+              _config["Jwt:Issuer"],
+              _config["Jwt:Issuer"],
+              claims,
+              expires: DateTime.Now.AddMinutes(120),
+              signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<VoterUser> SearchUserById(int id)
@@ -127,6 +168,16 @@ namespace ElectronicVote.Web.Repository.Users
                 return new ReadOnlySpan<byte>(passwordHashStored).SequenceEqual(new ReadOnlySpan<byte>(newPasswordHash));
             }
         }
-       
+
+        public Task UpdateUser(UpdateViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteUser(VoterUser PUser)
+        {
+            throw new NotImplementedException();
+        }             
+
     }
 }

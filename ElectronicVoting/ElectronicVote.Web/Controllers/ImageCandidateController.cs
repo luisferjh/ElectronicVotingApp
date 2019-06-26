@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ElectronicVote.Web.Repository.Candidates;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Voter")]
     public class ImageCandidateController : ControllerBase
     {
         private readonly IImgCandidateRepository _imgcandidateRepository;

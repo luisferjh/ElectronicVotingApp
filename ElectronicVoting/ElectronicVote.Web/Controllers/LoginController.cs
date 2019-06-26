@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ElectronicVote.Web.Models.User;
+using ElectronicVote.Web.Repository.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace ElectronicVote.Web.Controllers
 {
@@ -11,35 +14,42 @@ namespace ElectronicVote.Web.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        // GET: api/Login
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IUserRepository _userRepositories;
+
+        public LoginController(IUserRepository userRepositories)
         {
-            return new string[] { "value1", "value2" };
+            _userRepositories = userRepositories;           
         }
 
-        // GET: api/Login/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Login
+        // POST: api/User/Login
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userCredentials = await _userRepositories.Login(model);
+
+            if (userCredentials == null)
+            {
+                return NotFound();
+            }
+
+            if (!_userRepositories.CheckPassword(model.password, userCredentials.PasswordHash, userCredentials.PasswordSalt))
+            {
+                return NotFound();
+            }
+
+            var token = _userRepositories.GenerateToken(userCredentials);
+
+            return Ok(new { token = token });
         }
 
         // PUT: api/Login/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
         {
         }
     }
