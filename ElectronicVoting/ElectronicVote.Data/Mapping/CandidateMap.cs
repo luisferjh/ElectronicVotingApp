@@ -11,7 +11,7 @@ namespace ElectronicVote.Data.Mapping
     {
         public void Configure(EntityTypeBuilder<Candidate> builder)
         {
-            builder.Property(x => x.FullName).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.FullName).HasMaxLength(30).IsRequired();
             builder.Property(x => x.State).IsRequired();
 
             builder.ToTable("Candidate")

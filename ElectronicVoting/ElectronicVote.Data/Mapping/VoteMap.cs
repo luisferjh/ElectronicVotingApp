@@ -14,11 +14,8 @@ namespace ElectronicVote.Data.Mapping
             builder.ToTable("Vote")
               .HasKey(p => p.IdUser);
 
-            //builder.ToTable("Vote")              
-            //   .HasKey(p => new { p.IdUser, p.IdCandidate });
-
             //Relations            
-            // relation with Sale entity 1 to 1
+            // relation with user entity 1 to 1
             builder.HasOne(p => p.User)
                 .WithOne(i => i.Vote)
                 .HasForeignKey<Vote>(d => d.IdUser)      

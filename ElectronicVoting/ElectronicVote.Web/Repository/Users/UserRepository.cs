@@ -169,15 +169,20 @@ namespace ElectronicVote.Web.Repository.Users
             }
         }
 
-        public Task UpdateUser(UpdateViewModel model)
+        public async Task UpdateUser(UpdateViewModel model)
         {
-            throw new NotImplementedException();
-        }
+            var user = await _context.VoterUsers                
+                .FindAsync(model.IdUser);
 
-        public Task DeleteUser(VoterUser PUser)
-        {
-            throw new NotImplementedException();
-        }             
+            user.IdUser = model.IdUser;
+            user.IdRole = model.IdRole;
+            user.FullName = model.FullName;
+            user.Age = model.Age;
+            user.Email = model.Email;
+            user.Record = model.Record;         
+            user.Voted = model.Voted;            
 
+            await _context.SaveChangesAsync();
+        }        
     }
 }

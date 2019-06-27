@@ -87,8 +87,8 @@ namespace ElectronicVote.Web.Repository.Candidates
                 .FirstAsync(c => c.IdCandidate == model.IdCandidate);
 
             candidate.IdCandidate = model.IdCandidate;
-            candidate.FullName = model.FullName;
-            candidate.ImageCandidate.ImagePath = model.Picture;
+            candidate.FullName = model.FullName; 
+            candidate.ImageCandidate.ImagePath = model.ImagePath;
             candidate.State = candidate.State;
 
             await _context.SaveChangesAsync();

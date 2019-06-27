@@ -12,11 +12,11 @@ namespace ElectronicVote.Data.Mapping
         public void Configure(EntityTypeBuilder<VoterUser> builder)
         {
             //Validations
-            builder.Property(x => x.FullName).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.FullName).HasMaxLength(30).IsRequired();
             builder.Property(x => x.Age).IsRequired();
-            builder.Property(x => x.Record).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.Record).IsRequired();
             builder.Property(x => x.Voted).IsRequired();
-            builder.Property(x => x.Email).HasMaxLength(70).IsRequired();
+            builder.Property(x => x.Email).HasMaxLength(40).IsRequired();
             builder.Property(x => x.PasswordHash).HasMaxLength(250).IsRequired();
             builder.Property(x => x.PasswordSalt).HasMaxLength(250).IsRequired();
 

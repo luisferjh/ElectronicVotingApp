@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ElectronicVote.Web.Models.User;
 using ElectronicVote.Web.Repository.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -71,12 +73,6 @@ namespace ElectronicVote.Web.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        }       
     }
 }

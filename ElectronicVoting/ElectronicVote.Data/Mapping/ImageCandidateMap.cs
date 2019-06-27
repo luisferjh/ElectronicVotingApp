@@ -11,7 +11,7 @@ namespace ElectronicVote.Data.Mapping
     {
         public void Configure(EntityTypeBuilder<ImageCandidate> builder)
         {
-            builder.Property(x => x.ImagePath).HasMaxLength(150).IsRequired();          
+            builder.Property(x => x.ImagePath).HasMaxLength(400).IsRequired();          
 
             builder.ToTable("ImageCandidate")
               .HasKey(p => p.IdCandidate);

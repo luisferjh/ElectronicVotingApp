@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ElectronicVote.Web.Models.Candidate;
 using ElectronicVote.Web.Repository.Candidates;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateRepository _candidateRepository;
@@ -22,6 +24,7 @@ namespace ElectronicVote.Web.Controllers
         }
 
         // GET: api/Candidate/List
+        [Authorize(Roles = "Voter, Admin")]
         [HttpGet("[action]")]
         public async Task<IEnumerable> List()
         {
