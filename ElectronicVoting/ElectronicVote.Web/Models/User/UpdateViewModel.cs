@@ -19,6 +19,7 @@ namespace ElectronicVote.Web.Models.User
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "Please enter age")]
+        [Range(18, 150, ErrorMessage = "Please enter correct value")]
         public int Age { get; set; }
 
         [Required(ErrorMessage = "Please enter record")]

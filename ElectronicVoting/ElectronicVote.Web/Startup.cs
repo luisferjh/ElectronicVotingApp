@@ -2,6 +2,7 @@ using ElectronicVote.Data;
 using ElectronicVote.Web.Repository.Candidates;
 using ElectronicVote.Web.Repository.Roles;
 using ElectronicVote.Web.Repository.Users;
+using ElectronicVote.Web.Repository.Votes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,8 @@ namespace ElectronicVote.Web
             services.AddTransient<ICandidateRepository, CandidateRepository>();
             services.AddTransient<IImgCandidateRepository, ImgCandidateRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();        
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IVoteRepository, VoteRepository>();
 
             // In production, the React files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
