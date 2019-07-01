@@ -10,6 +10,7 @@ namespace ElectronicVote.Web.Models.Vote
     {
         [Required]
         public int IdUser { get; set; }
+
         [Required]
         public int IdCandidate { get; set; }
     }

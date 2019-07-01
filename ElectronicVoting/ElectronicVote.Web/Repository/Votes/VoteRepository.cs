@@ -33,10 +33,10 @@ namespace ElectronicVote.Web.Repository.Votes
             _context.SaveChanges();
         }
 
-        public CandidateVotedViewModel GetCandidate(int id)
+        public async Task<CandidateVotedViewModel> GetCandidate(int id)
         {
             var candidateVotes = _context.Votes.Where(v => v.IdCandidate == id).Count();
-            var candidate = _context.Candidates.Find(id);
+            var candidate = await _context.Candidates.FindAsync(id);
 
             return new CandidateVotedViewModel
             {
@@ -46,10 +46,7 @@ namespace ElectronicVote.Web.Repository.Votes
         }
 
         public CandidateVotedViewModel GetCandidateMostVoted()
-        {
-            //var vote = _context.Votes. .Select(v => v.IdCandidate).Count();         
-
-            //Console.WriteLine(vote);   
+        {           
             int votesMaximun = voteMax();
             Candidate candidate;
             CandidateVotedViewModel candidateMost = new CandidateVotedViewModel();
@@ -66,7 +63,7 @@ namespace ElectronicVote.Web.Repository.Votes
 
             foreach (var item in queryCandidateMostVoted)
             {
-                candidate = _context.Candidates.Find(item.idCandidate);
+                candidate =  _context.Candidates.Find(item.idCandidate);
                 candidateMost.CandidateName = candidate.FullName;
                 candidateMost.NumVotes = item.TotalVotes;
                 Console.WriteLine(item);

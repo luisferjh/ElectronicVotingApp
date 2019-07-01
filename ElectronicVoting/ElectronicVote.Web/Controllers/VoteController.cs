@@ -22,30 +22,26 @@ namespace ElectronicVote.Web.Controllers
             _voteRepository = voteRepository;
         }
 
-        // GET: api/Vote
-
-
-        // GET: api/Vote/5
+        // GET: api/Vote/GetMostVoted
         [HttpGet("[action]")]
         [Authorize(Roles = "Admin")]
         public IActionResult GetMostVoted()
-        {
-            //_voteRepository.GetCandidateMostVoted();           
+        {                    
             var candidate = _voteRepository.GetCandidateMostVoted();
             return Ok(candidate);
         }
 
-        // GET: api/GetVoteCandidate/5
-        [HttpGet("[action]")]
+        // GET: api/Vote/GetVoteCandidate/5
+        [HttpGet("[action]/{id}")]
         [Authorize(Roles = "Admin")]
-        public IActionResult GetVoteCandidate()
+        public async Task<IActionResult> GetVoteCandidate([FromRoute] int id)
         {       
-            var votes = _voteRepository.GetCandidate(6);
+            var votes = await _voteRepository.GetCandidate(id);
 
             return Ok(votes);
         }
 
-        // POST: api/Vote
+        // POST: api/Vote/ToVote
         [HttpPost("[action]")]
         public async Task<IActionResult> ToVote([FromBody] CreateViewModel model)
         {
