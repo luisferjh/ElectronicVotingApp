@@ -14,6 +14,7 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -45,6 +46,7 @@ namespace ElectronicVote.Web.Controllers
 
         // POST: api/User/Create
         [HttpPost("[action]")]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] CreateViewModel model)
         {
             if (!ModelState.IsValid)

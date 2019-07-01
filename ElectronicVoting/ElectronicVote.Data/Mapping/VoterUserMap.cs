@@ -18,7 +18,7 @@ namespace ElectronicVote.Data.Mapping
             builder.Property(x => x.Voted).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(40).IsRequired();
             builder.Property(x => x.PasswordHash).HasMaxLength(250).IsRequired();
-            builder.Property(x => x.PasswordSalt).HasMaxLength(250).IsRequired();
+            builder.Property(x => x.PasswordSalt).HasMaxLength(250).IsRequired();          
 
             //Relations
             builder.ToTable("User")
