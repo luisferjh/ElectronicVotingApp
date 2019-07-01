@@ -28,10 +28,11 @@ namespace ElectronicVote.Web.Controllers
         // GET: api/Vote/5
         [HttpGet("[action]")]
         [Authorize(Roles = "Admin")]
-        public void GetMostVoted()
+        public IActionResult GetMostVoted()
         {
             //_voteRepository.GetCandidateMostVoted();           
-            _voteRepository.GetCandidate(3);
+            var candidate = _voteRepository.GetCandidateMostVoted();
+            return Ok(candidate);
         }
 
         // GET: api/GetVoteCandidate/5

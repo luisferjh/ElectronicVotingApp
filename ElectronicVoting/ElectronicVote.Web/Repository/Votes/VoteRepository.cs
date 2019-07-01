@@ -10,11 +10,11 @@ namespace ElectronicVote.Web.Repository.Votes
 {
     public class VoteRepository : IVoteRepository
     {
-        private readonly DbContextElectronicVote _context;       
+        private readonly DbContextElectronicVote _context;
 
         public VoteRepository(DbContextElectronicVote context)
         {
-            _context = context;           
+            _context = context;
         }
 
         public async Task AddVote(CreateViewModel model)
@@ -25,7 +25,7 @@ namespace ElectronicVote.Web.Repository.Votes
                 IdCandidate = model.IdCandidate
             };
 
-            await _context.Votes.AddAsync(vote);         
+            await _context.Votes.AddAsync(vote);
 
             var user = await _context.VoterUsers.FindAsync(model.IdUser);
             user.Voted = true;
@@ -36,7 +36,7 @@ namespace ElectronicVote.Web.Repository.Votes
         public CandidateVotedViewModel GetCandidate(int id)
         {
             var candidateVotes = _context.Votes.Where(v => v.IdCandidate == id).Count();
-            var candidate =  _context.Candidates.Find(id);
+            var candidate = _context.Candidates.Find(id);
 
             return new CandidateVotedViewModel
             {
@@ -45,25 +45,49 @@ namespace ElectronicVote.Web.Repository.Votes
             };
         }
 
-        public void GetCandidateMostVoted()
+        public CandidateVotedViewModel GetCandidateMostVoted()
         {
-            var vote = _context.Votes.Select(v => v.IdCandidate).Count();         
+            //var vote = _context.Votes. .Select(v => v.IdCandidate).Count();         
 
-            Console.WriteLine(vote);
+            //Console.WriteLine(vote);   
+            int votesMaximun = voteMax();
+            Candidate candidate;
+            CandidateVotedViewModel candidateMost = new CandidateVotedViewModel();
 
-            //var candidate = await _context.Candidates(vote.);
+            var queryCandidateMostVoted = _context.Votes
+               .GroupBy(v => v.IdCandidate)
+               .Where(v => v.Count() == votesMaximun)
+               .Select(v =>
+               new 
+               {
+                   idCandidate = v.Key,
+                    TotalVotes = v.Count()
+               });
 
-            //return new CandidateMostVotedViewModel
-            //{
-            //    CandidateName =
-            //    NumVotes = vote;
-            //};
+            foreach (var item in queryCandidateMostVoted)
+            {
+                candidate = _context.Candidates.Find(item.idCandidate);
+                candidateMost.CandidateName = candidate.FullName;
+                candidateMost.NumVotes = item.TotalVotes;
+                Console.WriteLine(item);
+            }          
+
+            return candidateMost;
         }
-       
 
-        //public Task<IEnumerable<UserViewModel>> List()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        //Get highest vote
+        public int voteMax()
+        {
+            var votes = _context.Votes
+              .GroupBy(v => v.IdCandidate)
+              .Select(v =>
+              new
+              {
+                  idcandidate = v.Key,
+                  idUserCount = v.Count()
+              }).Max(v => v.idUserCount);
+
+            return votes;
+        }        
     }
 }

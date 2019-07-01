@@ -7,11 +7,10 @@ using ElectronicVote.Web.Models.Vote;
 namespace ElectronicVote.Web.Repository.Votes
 {
     public interface IVoteRepository
-    {
-        //Task<IEnumerable<UserViewModel>> List();
-        //Task<CandidateVotedViewModel> GetCandidateMostVoted(int id);
-        void GetCandidateMostVoted();
+    {          
+        CandidateVotedViewModel GetCandidateMostVoted();
         CandidateVotedViewModel GetCandidate(int id);
-        Task AddVote(CreateViewModel model);              
+        Task AddVote(CreateViewModel model);
+      
     }
 }
