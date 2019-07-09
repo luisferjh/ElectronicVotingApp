@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using ElectronicVote.Web.Models.Candidate;
 using ElectronicVote.Web.Repository.Candidates;
 using Microsoft.AspNetCore.Authorization;
@@ -78,7 +79,7 @@ namespace ElectronicVote.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }          
 
             if (model.IdCandidate <= 0)
             {

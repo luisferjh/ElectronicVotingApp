@@ -89,7 +89,7 @@ namespace ElectronicVote.Web.Repository.Candidates
             candidate.IdCandidate = model.IdCandidate;
             candidate.FullName = model.FullName; 
             candidate.ImageCandidate.ImagePath = model.ImagePath;
-            candidate.State = candidate.State;
+            candidate.State = candidate.State;            
 
             await _context.SaveChangesAsync();
         }

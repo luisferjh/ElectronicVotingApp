@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using ElectronicVote.Web.Models.Vote;
 using ElectronicVote.Web.Repository.Votes;
 using Microsoft.AspNetCore.Authorization;
@@ -49,20 +50,25 @@ namespace ElectronicVote.Web.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await _voteRepository.AddVote(model);
-            }
-            catch (DbUpdateException)
-            {
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
 
-            return Ok();
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    await _voteRepository.AddVote(model);
+                    scope.Complete();
+                }
+                catch (DbUpdateException)
+                {
+                    return BadRequest();
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+
+                return Ok();
+            }                     
         }
        
     }
