@@ -16,8 +16,12 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <!-- <HelloWorld/> -->
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </v-content>
+    <v-footer color="primary" inset> <span class="white--text ml-2">Made by Luis Jimenez &copy;2019</span></v-footer>
   </v-app>
 </template>
 

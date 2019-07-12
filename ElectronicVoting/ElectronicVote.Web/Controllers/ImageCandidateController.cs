@@ -11,7 +11,7 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Voter")]
+    //[Authorize(Roles = "Voter")]
     public class ImageCandidateController : ControllerBase
     {
         private readonly IImgCandidateRepository _imgcandidateRepository;
