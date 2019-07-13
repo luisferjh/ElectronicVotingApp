@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <CandidateProfile></CandidateProfile>
-    </div>
+ <v-layout>  
+      <CandidateProfile></CandidateProfile>  
+  </v-layout>
 </template>
 
 <script>

@@ -15,7 +15,7 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateRepository _candidateRepository;
@@ -25,7 +25,8 @@ namespace ElectronicVote.Web.Controllers
         }
 
         // GET: api/Candidate/List
-      //  [Authorize(Roles = "Voter, Admin")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "Voter, Admin")]
         [HttpGet("[action]")]
         public async Task<IEnumerable<CandidateViewModel>> List()
         {

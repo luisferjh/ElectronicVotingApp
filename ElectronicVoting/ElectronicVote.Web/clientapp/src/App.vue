@@ -17,7 +17,7 @@
 
     <v-content>
       <!-- <HelloWorld/> -->
-      <v-container>
+      <v-container fluid>
         <router-view></router-view>
       </v-container>
     </v-content>
