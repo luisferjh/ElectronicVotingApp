@@ -25,14 +25,14 @@
   
   <v-layout>
     <v-flex>
-       <v-btn color="success" @click="fetchCandidates()">Fetch candidates</v-btn>
+       <v-btn color="success" @click="toVote(idVoted)">Vote</v-btn>
     </v-flex>
   </v-layout>
  
 
- <v-layout>
+ <!-- <v-layout>
    <p>{{idVoted}}</p>
- </v-layout>
+ </v-layout> -->
 </v-container>
 
 </template>
@@ -53,13 +53,16 @@ export default {
         return this.data 
       }
     },
+    created () {
+      this.fetchCandidates()
+    },
     methods: {
       fetchCandidates() {
         let me=this;
         axios.get('https://localhost:44397/api/candidate/list')
         .then(function (response) {
          // handle success
-          me.candidates = response.data
+          me.candidates = response.data         
           console.log(me.candidates[0]);
           console.log(response);
           })
@@ -67,6 +70,9 @@ export default {
           // handle error
           console.log(error);
         })
+      },
+      toVote(idVoted){
+        console.log(idVoted)
       }
     },
 }
