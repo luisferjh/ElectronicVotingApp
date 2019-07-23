@@ -54,26 +54,29 @@ export default {
       }
     },
     created () {
-      this.fetchCandidates()
+      this.fetchCandidates()  
     },
     methods: {
       fetchCandidates() {
-        let me=this;
-        axios.get('https://localhost:44397/api/candidate/list')
+        let me=this;    
+        console.log(this.$store.state.user.Role)
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}
+        axios.get('https://localhost:44397/api/candidate/list',
+          headers)
         .then(function (response) {
          // handle success
-          me.candidates = response.data         
-          console.log(me.candidates[0]);
-          console.log(response);
+          me.candidates = response.data                  
+          console.log(response);            
           })
         .catch(function (error) {
-          // handle error
+          // handle error          
           console.log(error);
         })
       },
       toVote(idVoted){
         console.log(idVoted)
-      }
+      }        
     },
 }
 </script>

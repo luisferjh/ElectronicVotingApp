@@ -46,12 +46,25 @@ var router =  new Router({
 })
 
 router.beforeEach((to, from, next) =>{
+  store.dispatch('autoLogin')
   if (to.matched.some(record => record.meta.free)) {
     next()
+  }  
+  else if(store.state.user && store.state.user.Role == 'Admin'){
+    if(to.matched.some(record => record.meta.admin)){
+      next()
+    }
   }
-  // else if(store.state.usuario && store.state.usuario.role == 'admin'){
-
-  // }
+  else if(store.state.user && store.state.user.Role == 'Voter'){
+    if(to.matched.some(record => record.meta.voter)){
+      next()
+    }
+  }
+  else{
+    next({
+      name:'login'
+    })
+  }
 })
 
 export default router

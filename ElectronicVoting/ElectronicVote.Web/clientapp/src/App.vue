@@ -37,6 +37,9 @@ export default {
     return {
       //
     }
-  }
+  },
+  // beforeCreate () {
+  //   this.$store.dispatch('autoLogin')
+  // },
 }
 </script>

@@ -18,10 +18,8 @@
 
       </v-text-field>    
 
-      <v-btn @click="submit">Log in</v-btn>          
+      <v-btn @click="submit"> Log in</v-btn>          
     </v-form>
-
-      <v-btn @click="showUser">show</v-btn>    
    </v-layout>
 </template>
 
@@ -52,14 +50,16 @@ import axios from 'axios'
         .then(data =>{
           console.log(data)
           this.$store.dispatch('saveToken', data.token)
-          this.$router.push({name:'home'})
+          this.$router.push({name:'candidate'})        
         })
         .catch(function(err){
           console.log(err)
         })
       },
       showUser(){
-        console.log(this.$store.state.user)
+         //this.$store.dispatch('saveToken', localStorage.getItem('token'))
+        // console.log(this.$store.state.user.Role)
+        console.log(this.$store.state.test);
       }
     },
   }

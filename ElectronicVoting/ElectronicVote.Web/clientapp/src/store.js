@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {    
     token:null,
-    user:null
+    user:null,
+    test:48
   },
   mutations: {
     setToken:function(state,token){
@@ -30,7 +31,7 @@ export default new Vuex.Store({
         commit('setToken',token)
         commit('setUser',decode(token))
       }
-      router.push({name:'home'})
+      //router.push({name:'home'})
     },
     exit({commit}){
       commit('setToken',null)
