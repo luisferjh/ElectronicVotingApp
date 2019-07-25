@@ -72,6 +72,9 @@ export default {
         .catch(function (error) {
           // handle error          
           console.log(error);
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }
         })
       },
       toVote(idVoted){

@@ -129,7 +129,7 @@ namespace ElectronicVote.Web.Repository.Users
               _config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims:claims,
-              expires: DateTime.Now.AddMinutes(2),
+              expires: DateTime.Now.AddMinutes(5),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

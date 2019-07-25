@@ -1,26 +1,38 @@
 <template>
-   <v-layout>
-    <v-form>
-      <v-text-field
-      v-model="email"
-      label="Email"     
-      required
-      >
+  <v-container>
+    <v-layout justify-center>
+      <v-flex xs12 sm6 md5>
+        <v-card>
+          <v-toolbar dark color="cyan darken-2">
+            <v-toolbar-title>Electronic Vote</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-form>
+              <v-text-field
+              prepend-icon="person"
+              v-model="email"
+              label="Email"     
+              required
+              >
+              </v-text-field>
 
-      </v-text-field>
-
-      <v-text-field
-      v-model="password"
-      type="password"
-      label="Password"
-      required
-      >
-
-      </v-text-field>    
-
-      <v-btn @click="submit"> Log in</v-btn>          
-    </v-form>
-   </v-layout>
+              <v-text-field
+              prepend-icon="lock"
+              v-model="password"
+              type="password"
+              label="Password"
+              required
+              >
+              </v-text-field>   
+            </v-form>  
+            <div class="text-xs-center">
+              <v-btn align-center dark color="cyan darken-2" @click="submit"> Log in</v-btn>                   
+            </div>            
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -50,17 +62,12 @@ import axios from 'axios'
         .then(data =>{
           console.log(data)
           this.$store.dispatch('saveToken', data.token)
-          this.$router.push({name:'candidate'})        
+          this.$router.push({name:'home'})        
         })
         .catch(function(err){
           console.log(err)
         })
-      },
-      showUser(){
-         //this.$store.dispatch('saveToken', localStorage.getItem('token'))
-        // console.log(this.$store.state.user.Role)
-        console.log(this.$store.state.test);
-      }
+      },      
     },
   }
 </script>

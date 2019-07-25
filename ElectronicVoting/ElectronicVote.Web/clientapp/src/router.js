@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Candidate from './views/Candidate.vue'
 import Login from './views/Login.vue'
+import Counter from './views/Counter.vue'
 import store from './store'
 
 Vue.use(Router)
@@ -38,9 +39,12 @@ var router =  new Router({
       }
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/counter',
+      name: 'counter',
+      component: Counter,
+      meta:{
+        admin:true
+      }
     }
   ]
 })
