@@ -14,7 +14,6 @@ namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Voter")]
     public class VoteController : ControllerBase
     {
         private readonly IVoteRepository _voteRepository;
@@ -32,6 +31,14 @@ namespace ElectronicVote.Web.Controllers
             return Ok(candidate);
         }
 
+        // GET: api/Vote/ListVotes
+        [HttpGet("[action]/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IEnumerable<VotesByCandidateViewModel>> ListVotes()
+        {            
+            return null;
+        }
+
         // GET: api/Vote/GetVoteCandidate/5
         [HttpGet("[action]/{id}")]
         [Authorize(Roles = "Admin")]
@@ -44,13 +51,14 @@ namespace ElectronicVote.Web.Controllers
 
         // POST: api/Vote/ToVote
         [HttpPost("[action]")]
+        [Authorize(Roles = "Admin,Voter")]
         public async Task<IActionResult> ToVote([FromBody] CreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-
+            //coment
             using (var scope = new TransactionScope())
             {
                 try

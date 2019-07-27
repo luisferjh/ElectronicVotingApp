@@ -72,6 +72,11 @@ namespace ElectronicVote.Web.Repository.Votes
             return candidateMost;
         }
 
+        public VotesByCandidateViewModel ListVotes()
+        {
+            throw new NotImplementedException();
+        }
+
         //Get highest vote
         public int voteMax()
         {
