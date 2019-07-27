@@ -26,8 +26,9 @@
               </v-text-field>   
             </v-form>  
             <div class="text-xs-center">
-              <v-btn align-center dark color="cyan darken-2" @click="submit"> Log in</v-btn>                   
-            </div>            
+              <v-btn align-center dark color="cyan darken-2" @click="submit"> Log in</v-btn> 
+              <v-btn align-center dark color="cyan darken-2" @click="submit"> Sign in</v-btn>                   
+            </div>                    
           </v-card-text>
         </v-card>
       </v-flex>

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Candidate from './views/Candidate.vue'
 import Login from './views/Login.vue'
 import Counter from './views/Counter.vue'
+import SignIn from './views/Signin.vue'
 import store from './store'
 
 Vue.use(Router)
@@ -34,6 +35,14 @@ var router =  new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      meta:{
+        free:true 
+      }
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: SignIn,
       meta:{
         free:true 
       }

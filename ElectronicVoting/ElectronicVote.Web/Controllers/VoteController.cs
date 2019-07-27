@@ -58,7 +58,7 @@ namespace ElectronicVote.Web.Controllers
             {
                 return BadRequest();
             }
-            //coment
+        
             //using (var scope = new TransactionScope())
             //{
                 try

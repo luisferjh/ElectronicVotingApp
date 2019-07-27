@@ -23,10 +23,13 @@
     </v-flex>       
   </v-layout>
   
-  <v-layout>
-    <v-flex>
-       <v-btn color="success" @click="toVote(idVoted)">Vote</v-btn>
-    </v-flex>
+  <v-layout justify-center>
+   
+      <v-btn large color="success" @click="toVote(idVoted)">
+        <v-icon dark>how_to_vote</v-icon>
+         Vote
+      </v-btn>
+    
   </v-layout>
  
 </v-container>
