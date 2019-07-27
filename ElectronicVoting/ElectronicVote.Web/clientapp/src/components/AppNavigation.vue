@@ -68,10 +68,10 @@
         </template>
 
         <template>
-           <v-list-tile @click="$store.dispatch('exit')">
-           <v-list-title-title>
-            Log Out 
-           </v-list-title-title>            
+          <v-list-tile @click="$store.dispatch('exit')">
+            <v-list-tile-title>
+              Log Out 
+            </v-list-tile-title>            
           </v-list-tile>      
         </template>
             
@@ -108,14 +108,21 @@
           </v-toolbar-title>
         </template>
      
-         <v-list>
-          <div class="pl-3">
-            {{userLoggin.user}}
-          </div>
-           <div class="pl-3">
-            {{userLoggin.role}}
-          </div>
-          <hr>   
+        <v-list>
+          <template>         
+            <v-list-tile>
+              <div>
+                {{userLoggin.user}}
+              </div>              
+            </v-list-tile>
+            <hr>
+            <v-list-tile>         
+              <div>
+                {{userLoggin.role}}
+              </div>         
+            </v-list-tile>
+          </template>
+         <hr>
           <template>                
             <v-list-tile avatar @click="$store.dispatch('exit')">
               <v-list-tile-content>

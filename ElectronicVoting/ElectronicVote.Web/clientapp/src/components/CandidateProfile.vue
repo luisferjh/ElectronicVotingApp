@@ -29,10 +29,6 @@
     </v-flex>
   </v-layout>
  
-
- <!-- <v-layout>
-   <p>{{idVoted}}</p>
- </v-layout> -->
 </v-container>
 
 </template>
@@ -77,8 +73,28 @@ export default {
           }
         })
       },
-      toVote(idVoted){
-        console.log(idVoted)
+      toVote(pIdVoted){
+        let me=this;    
+        console.log(this.$store.state.user.Role)
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}
+        axios.post('https://localhost:44397/api/vote/tovote',
+          {
+            'IdUser':parseInt(this.$store.state.user.IdVoterUser),
+            'IdCandidate':pIdVoted
+          },
+          headers)
+        .then(function (response) {
+         // handle success                 
+          console.log("se registro su voto satisfatoriamente");            
+          })
+        .catch(function (error) {
+          // handle error          
+          console.log(error);
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }
+        })
       }        
     },
 }
