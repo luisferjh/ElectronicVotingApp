@@ -69,9 +69,9 @@
 
         <template>
            <v-list-tile @click="$store.dispatch('exit')">
-           <v-list-tile-title>
+           <v-list-title-title>
             Log Out 
-           </v-list-tile-title>            
+           </v-list-title-title>            
           </v-list-tile>      
         </template>
             
@@ -109,18 +109,12 @@
         </template>
      
          <v-list>
-          <template>
-         <v-list-tile>
-          <div>
+          <div class="pl-3">
             {{userLoggin.user}}
-          </div>              
-         </v-list-tile>
-         <v-list-tile>         
-           <div>
+          </div>
+           <div class="pl-3">
             {{userLoggin.role}}
-          </div>         
-         </v-list-tile>
-        </template>
+          </div>
           <hr>   
           <template>                
             <v-list-tile avatar @click="$store.dispatch('exit')">

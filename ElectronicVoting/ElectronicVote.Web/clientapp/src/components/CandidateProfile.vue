@@ -1,38 +1,39 @@
 <template>
-  <v-container grid-list-xl>
-    <v-layout row wrap>
+<v-container grid-list-xl>
+  <v-layout row wrap>
 
-      <v-flex xs12 sm6 md4 v-for="(item, index) in candidates" :key="index">
-        <v-card>
-          <v-img
-          v-bind:src='item.picture'
-          height="200px" 
-          contain      
-          ></v-img>
-            <v-card-title class="pa-0 justify-center">
-              <div class="d-inline-block display-2 headline mb-0"> 
-                {{ item.fullName }}
-              </div>                   
-          </v-card-title>
-          <v-card-actions >
-            <v-radio-group v-model="idVoted" hide-details class="justify-center mt-0">            
-              <v-radio v-bind:value='item.idCandidate' label=""></v-radio>
-            </v-radio-group>
-          </v-card-actions>
-        </v-card>     
-      </v-flex>       
-    </v-layout>
+    <v-flex xs12 sm6 md4 v-for="(item, index) in candidates" :key="index">
+      <v-card>
+        <v-img
+        v-bind:src='item.picture'
+        height="200px" 
+        contain      
+        ></v-img>
+          <v-card-title class="pa-0 justify-center">
+            <div class="d-inline-block display-2 headline mb-0"> 
+              {{ item.fullName }}
+            </div>                   
+        </v-card-title>
+        <v-card-actions >
+          <v-radio-group v-model="idVoted" hide-details class="justify-center mt-0">            
+            <v-radio v-bind:value='item.idCandidate' label=""></v-radio>
+          </v-radio-group>
+        </v-card-actions>
+      </v-card>     
+    </v-flex>       
+  </v-layout>
+  
+  <v-layout>
+    <v-flex>
+       <v-btn color="success" @click="toVote(idVoted)">Vote</v-btn>
+    </v-flex>
+  </v-layout>
+ 
 
-    <v-layout align-center justify-center row>
-      <v-flex>
-          <v-btn large color="success" @click="toVote(idVoted)">
-            Vote         
-          <v-icon right dark>how_to_vote</v-icon>
-        </v-btn>            
-      </v-flex>
-    </v-layout>
-
-  </v-container>
+ <!-- <v-layout>
+   <p>{{idVoted}}</p>
+ </v-layout> -->
+</v-container>
 
 </template>
 
@@ -57,7 +58,8 @@ export default {
     },
     methods: {
       fetchCandidates() {
-        let me=this;           
+        let me=this;    
+        console.log(this.$store.state.user.Role)
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
         axios.get('https://localhost:44397/api/candidate/list',
@@ -65,7 +67,7 @@ export default {
         .then(function (response) {
          // handle success
           me.candidates = response.data                  
-          // console.log(response);            
+          console.log(response);            
           })
         .catch(function (error) {
           // handle error          
@@ -75,31 +77,8 @@ export default {
           }
         })
       },
-      toVote(pIdVoted){
-        let me=this;           
-        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
-        let headers = {headers:AuthorizationHeader}
-        
-        axios.post('https://localhost:44397/api/vote/tovote',
-        {
-          'IdUser':parseInt(this.$store.state.user.IdVoterUser),
-          'IdCandidate':pIdVoted
-        },
-          headers)
-        .then(function (response) {
-         // handle success                       
-          console.log('Su voto se registro satisfactoriamente');            
-          })
-        .catch(function (error) {
-          // handle error          
-          console.log(error);
-          if (error.response.status === 401) {						
-						me.$store.dispatch('exit')
-          }
-        })
-
-        // console.log(pIdVoted)
-        // console.log(typeof(pIdVoted))
+      toVote(idVoted){
+        console.log(idVoted)
       }        
     },
 }

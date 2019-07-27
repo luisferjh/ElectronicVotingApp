@@ -9,7 +9,6 @@ namespace ElectronicVote.Web.Repository.Votes
     public interface IVoteRepository
     {          
         CandidateVotedViewModel GetCandidateMostVoted();
-        VotesByCandidateViewModel ListCandidateVoted();
         Task<CandidateVotedViewModel> GetCandidate(int id);
         Task AddVote(CreateViewModel model);
       

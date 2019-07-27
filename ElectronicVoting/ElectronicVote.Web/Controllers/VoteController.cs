@@ -13,7 +13,8 @@ using Microsoft.EntityFrameworkCore;
 namespace ElectronicVote.Web.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]    
+    [ApiController]
+    [Authorize(Roles = "Admin,Voter")]
     public class VoteController : ControllerBase
     {
         private readonly IVoteRepository _voteRepository;
@@ -31,15 +32,6 @@ namespace ElectronicVote.Web.Controllers
             return Ok(candidate);
         }
 
-        // GET: api/Vote/ListVotes
-        [HttpGet("[action]")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult ListVotes()
-        {
-            var candidate = _voteRepository.ListCandidateVoted();
-            return Ok();
-        }
-
         // GET: api/Vote/GetVoteCandidate/5
         [HttpGet("[action]/{id}")]
         [Authorize(Roles = "Admin")]
@@ -52,33 +44,31 @@ namespace ElectronicVote.Web.Controllers
 
         // POST: api/Vote/ToVote
         [HttpPost("[action]")]
-        [Authorize(Roles = "Admin,Voter")]
         public async Task<IActionResult> ToVote([FromBody] CreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
-            //using (var scope = new TransactionScope())
-            //{
+            using (var scope = new TransactionScope())
+            {
                 try
                 {
                     await _voteRepository.AddVote(model);
-                    //scope.Complete();
+                    scope.Complete();
                 }
                 catch (DbUpdateException)
                 {
                     return BadRequest();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine("error en la exc" + ex);
-                    return BadRequest(ex);
+                    return BadRequest();
                 }
 
                 return Ok();
-            //}                     
+            }                     
         }
        
     }
