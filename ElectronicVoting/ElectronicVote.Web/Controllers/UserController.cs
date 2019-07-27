@@ -30,9 +30,9 @@ namespace ElectronicVote.Web.Controllers
             var users = await _userRepository.List();
             return users;
         }
-
+ 
         // GET: api/User/get/5
-        [HttpGet("[action]/{id}")]
+        [HttpGet("[action]/{id}")]  
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var user = await _userRepository.GetUser(id);

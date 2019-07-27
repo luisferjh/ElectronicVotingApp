@@ -27,7 +27,7 @@
             </v-form>  
             <div class="text-xs-center">
               <v-btn align-center dark color="cyan darken-2" @click="submit"> Log in</v-btn> 
-              <v-btn align-center dark color="cyan darken-2" @click="submit"> Sign in</v-btn>                   
+              <v-btn align-center dark color="cyan darken-2" @click="$router.push('/signin')"> Sign in</v-btn>                   
             </div>                    
           </v-card-text>
         </v-card>
@@ -52,8 +52,7 @@ import axios from 'axios'
     },
     methods: {
       submit () {        
-        let me = this;
-        me.error=null;
+        let me = this;       
         axios.post('https://localhost:44397/api/login',{											
 					Email:this.email,
 					Password: this.password					
@@ -68,7 +67,10 @@ import axios from 'axios'
         .catch(function(err){
           console.log(err)
         })
-      },      
+      }, 
+      register(){
+
+      }     
     },
   }
 </script>
