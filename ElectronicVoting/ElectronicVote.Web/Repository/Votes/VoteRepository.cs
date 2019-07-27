@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ElectronicVote.Data;
 using ElectronicVote.Entities;
 using ElectronicVote.Web.Models.Vote;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElectronicVote.Web.Repository.Votes
 {
@@ -70,6 +71,19 @@ namespace ElectronicVote.Web.Repository.Votes
             }          
 
             return candidateMost;
+        }
+
+        public VotesByCandidateViewModel ListCandidateVoted()
+        {
+            var vote = _context.Votes.Include(v => v.Candidate).ToList();
+            Console.WriteLine(vote);
+
+            return null;
+            //return new VotesByCandidateViewModel {
+            //    IdCandidate,
+            //    CandidateName,
+            //    NumVotes
+            //};
         }
 
         //Get highest vote
