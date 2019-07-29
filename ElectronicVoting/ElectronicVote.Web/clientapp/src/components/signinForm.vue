@@ -49,7 +49,8 @@
           </v-flex>
           
           <v-flex xs12 sm10 md8>
-            <v-btn @click="signUp()">Sign Up</v-btn>
+            <v-btn @click="signUp()" color="cyan darken-2" dark>Sign Up</v-btn>
+            <v-btn @click="$router.push('/login')" color="red darken-2" dark>Back to Log In</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -64,7 +65,7 @@
         You have been registered successfully
       </v-alert>
       <div class="text-xs-center">
-        <v-btn large @click="$router.push('/login')" color="cyan darken-2" dark>Back to Log In</v-btn>
+        <v-btn large @click="$router.push('/login')" color="cyan darken-2" dark>Back to Log In</v-btn>        
       </div>
     </v-flex>   
   </span>

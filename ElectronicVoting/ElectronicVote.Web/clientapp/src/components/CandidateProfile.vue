@@ -86,8 +86,8 @@ export default {
           },
           headers)
         .then(function (response) {
-         // handle success                 
-          console.log("se registro su voto satisfatoriamente");            
+         // handle success                       
+          me.updateState()         
           })
         .catch(function (error) {
           // handle error          
@@ -96,6 +96,9 @@ export default {
 						me.$store.dispatch('exit')
           }
         })
+      },
+      updateState(){
+        this.$emit('updateState',{state:true})
       }        
     },
 }

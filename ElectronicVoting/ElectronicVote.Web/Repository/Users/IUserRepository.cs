@@ -13,6 +13,7 @@ namespace ElectronicVote.Web.Repository.Users
         Task<UserViewModel> GetUser(int id);
         Task AddUser(CreateViewModel model);
         Task<UserLoginViewModel> Login(LoginViewModel model);
+        Task<UserStateViewModel> StateUser(int id);
         Task UpdateUser(UpdateViewModel model);              
         void CreatePassword(string password, out byte[] passwordHash, out byte[] passwordSalt);
         bool CheckPassword(string password, byte[] passwordHashStored, byte[] passwordSaltStored);

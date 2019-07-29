@@ -92,7 +92,7 @@ namespace ElectronicVote.Web.Repository.Users
         public async Task<UserLoginViewModel> Login(LoginViewModel model)
         {
             var user = await _context.VoterUsers
-                .Include(u=> u.Role)
+                .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == model.Email);
 
             return new UserLoginViewModel
@@ -128,7 +128,7 @@ namespace ElectronicVote.Web.Repository.Users
             var token = new JwtSecurityToken(
               _config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
-              claims:claims,
+              claims: claims,
               expires: DateTime.Now.AddMinutes(5),
               signingCredentials: credentials);
 
@@ -171,7 +171,7 @@ namespace ElectronicVote.Web.Repository.Users
 
         public async Task UpdateUser(UpdateViewModel model)
         {
-            var user = await _context.VoterUsers                
+            var user = await _context.VoterUsers
                 .FindAsync(model.IdUser);
 
             user.IdUser = model.IdUser;
@@ -179,10 +179,21 @@ namespace ElectronicVote.Web.Repository.Users
             user.FullName = model.FullName;
             user.Age = model.Age;
             user.Email = model.Email;
-            user.Record = model.Record;         
-            user.Voted = model.Voted;            
+            user.Record = model.Record;
+            user.Voted = model.Voted;
 
             await _context.SaveChangesAsync();
-        }        
+        }
+
+        public async Task<UserStateViewModel> StateUser(int id)
+        {
+            var user = await _context.VoterUsers.FindAsync(id);
+
+            return  new UserStateViewModel
+            {
+                IdUser = user.IdUser,
+                State = user.Voted
+            };
+        }
     }
 }

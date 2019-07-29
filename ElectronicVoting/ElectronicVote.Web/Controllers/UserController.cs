@@ -44,6 +44,20 @@ namespace ElectronicVote.Web.Controllers
             return Ok(user);
         }
 
+        // GET: api/User/getState/5
+        [HttpGet("[action]/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetState([FromRoute] int id)
+        {
+            var userState = await _userRepository.StateUser(id);
+            if (userState == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userState);
+        }
+
         // POST: api/User/Create
         [HttpPost("[action]")]
         [AllowAnonymous]
