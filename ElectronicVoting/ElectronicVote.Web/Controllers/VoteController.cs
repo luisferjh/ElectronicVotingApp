@@ -32,11 +32,12 @@ namespace ElectronicVote.Web.Controllers
         }
 
         // GET: api/Vote/ListVotes
-        [HttpGet("[action]/{id}")]
+        [HttpGet("[action]")]
         [Authorize(Roles = "Admin")]
-        public async Task<IEnumerable<VotesByCandidateViewModel>> ListVotes()
-        {            
-            return null;
+        public IEnumerable<VotesByCandidateViewModel> ListVotes()
+        {
+            var CandidateByVotes = _voteRepository.ListVotes();
+            return CandidateByVotes;
         }
 
         // GET: api/Vote/GetVoteCandidate/5
