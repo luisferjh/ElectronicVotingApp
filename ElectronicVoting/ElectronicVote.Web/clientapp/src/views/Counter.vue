@@ -1,14 +1,17 @@
 <template>
- <v-layout>
-   <CounterResults/>
- </v-layout>
+ <span>
+  <CounterResultsByCandidate/>
+  <CounterResults/>
+ </span>
 </template>
 
 <script>
   import CounterResults from '@/components/CounterResults'
+  import CounterResultsByCandidate from '@/components/CounterResultByCandidate'
   export default {
       components: {
-        CounterResults
+        CounterResults,
+        CounterResultsByCandidate
       },
   }
 </script>

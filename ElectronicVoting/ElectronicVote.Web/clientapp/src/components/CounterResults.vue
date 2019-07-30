@@ -1,10 +1,11 @@
 <template>
- <v-layout justify-center>
-  <v-flex xs12 sm8 md6>
+<v-layout justify-center wrap>
 
-     <div class="display-1 font-weight-medium mb-3">
+  <v-flex xs12 sm4 md3>
+
+    <div class="display-1 font-weight-medium my-3">
        Most voted candidate
-     </div>
+    </div>
     
     <v-card>
       <v-card-title><h4>{{ winnerCandidate.candidateName }}</h4></v-card-title>
@@ -17,7 +18,8 @@
         </v-list>
       </v-card>
    </v-flex>
- </v-layout>
+  
+</v-layout>
 </template>
 
 <script>
@@ -40,8 +42,7 @@
         axios.get('https://localhost:44397/api/vote/GetMostVoted',
           headers)
         .then(function (response) {
-         // handle success
-         console.log(response.data)
+         // handle success         
          me.winnerCandidate = response.data                    
         })
         .catch(function (error) {
