@@ -194,6 +194,6 @@ namespace ElectronicVote.Web.Repository.Users
                 IdUser = user.IdUser,
                 State = user.Voted
             };
-        }
+        }      
     }
 }

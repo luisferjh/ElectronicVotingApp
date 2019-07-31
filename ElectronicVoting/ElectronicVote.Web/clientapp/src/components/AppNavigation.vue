@@ -30,7 +30,7 @@
         </v-list-tile>
       </template>
 
-      <template>
+      <template v-if="$store.state.user.Role =='Admin'">
         <v-list-tile @click="$router.push('/counter')">      
             <v-list-tile-action>          
               <v-icon>format_list_numbered</v-icon>
@@ -69,7 +69,7 @@
 
         <template>
           <v-list-tile @click="$store.dispatch('exit')">
-            <v-list-tile-title>
+            <v-list-tile-title class="pl-3">
               Log Out 
             </v-list-tile-title>            
           </v-list-tile>      
@@ -94,13 +94,13 @@
       <v-icon dark>how_to_vote</v-icon>
       <span class="mr-2">Vote</span>
     </v-btn>
-    <v-btn flat class="hidden-sm-and-down" to="/counter">
+    <v-btn flat class="hidden-sm-and-down" to="/counter" v-if="$store.state.user.Role =='Admin'">
       <v-icon dark>format_list_numbered</v-icon>   
       <span class="mr-2">Counter</span>
     </v-btn>    
 
-    <v-btn flat class="hidden-sm-and-down">
                          
+    <v-btn flat class="hidden-sm-and-down">
       <v-menu :nudge-width="100">
         <template v-slot:activator="{ on }">
           <v-toolbar-title v-on="on">
@@ -115,14 +115,14 @@
                 {{userLoggin.user}}
               </div>              
             </v-list-tile>
-            <hr>
+            <v-divider></v-divider> 
             <v-list-tile>         
               <div>
                 {{userLoggin.role}}
               </div>         
             </v-list-tile>
           </template>
-         <hr>
+         <v-divider></v-divider>
           <template>                
             <v-list-tile avatar @click="$store.dispatch('exit')">
               <v-list-tile-content>
@@ -132,8 +132,8 @@
           </template>
         </v-list>
       </v-menu>
-          
     </v-btn>
+          
   </v-toolbar>
 </span>
  
