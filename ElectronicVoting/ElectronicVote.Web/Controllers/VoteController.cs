@@ -57,15 +57,15 @@ namespace ElectronicVote.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
         
-            //using (var scope = new TransactionScope())
-            //{
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
                 try
                 {
                     await _voteRepository.AddVote(model);
-                    //scope.Complete();
+                    scope.Complete();
                 }
                 catch (DbUpdateException)
                 {
@@ -77,7 +77,7 @@ namespace ElectronicVote.Web.Controllers
                 }
 
                 return Ok();
-            //}                     
+            }                     
         }
        
     }

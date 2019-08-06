@@ -26,12 +26,26 @@ namespace ElectronicVote.Web.Repository.Votes
                 IdCandidate = model.IdCandidate
             };
 
-            await _context.Votes.AddAsync(vote);
-
             var user = await _context.VoterUsers.FindAsync(model.IdUser);
-            user.Voted = true;
 
-            _context.SaveChanges();
+            if (user.Record == false)
+            {
+                await _context.Votes.AddAsync(vote);
+                user.Voted = true;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw DbUpdateException();
+            }
+         
+        }
+
+        private Exception DbUpdateException()
+        {
+            string description = "State voter no valid";
+
+            return new Exception(description);
         }
 
         public async Task<CandidateVotedViewModel> GetCandidate(int id)

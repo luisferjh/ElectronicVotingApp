@@ -68,6 +68,11 @@ namespace ElectronicVote.Web.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (model.Age < 18)
+            {
+                return BadRequest();
+            }
+
             try
             {
                 await _userRepository.AddUser(model);
