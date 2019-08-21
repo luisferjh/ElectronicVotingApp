@@ -32,7 +32,7 @@ namespace ElectronicVote.Web.Repository.Votes
             {
                 await _context.Votes.AddAsync(vote);
                 user.Voted = true;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             else
             {
